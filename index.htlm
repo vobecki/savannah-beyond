@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Savanna & Beyond | Luxury Kenya Safari Experiences</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:    #C9A84C;
+      --gold-lt: #E8D5A3;
+      --earth:   #2C1810;
+      --bark:    #3D2314;
+      --sand:    #F5EFE0;
+      --cream:   #FAF7F0;
+      --white:   #FFFFFF;
+      --gray:    #7A7060;
+      --olive:   #4A4A2A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--earth);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      height: 72px;
+      background: transparent;
+      transition: background 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(44,24,16,0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      border: 1px solid var(--gold) !important;
+      color: var(--gold) !important;
+      padding: 0.5rem 1.4rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 6% 6rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://image.pollinations.ai/prompt/cinematic%20wide%20angle%20aerial%20view%20vast%20African%20savanna%20golden%20hour%20acacia%20trees%20silhouetted%20dramatic%20orange%20red%20sky%20single%20elephant%20walking%20photorealistic%20luxury%20travel%20photography%20ultra%20detailed%20no%20text%20no%20watermark?width=1600&height=900&seed=42&nologo=true');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44,24,16,0.92) 0%, rgba(44,24,16,0.3) 50%, rgba(44,24,16,0.5) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      max-width: 800px;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero h1 em { font-style: italic; color: var(--gold-lt); }
+
+    .hero-sub {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--earth);
+      padding: 0.9rem 2.2rem;
+      font-weight: 600;
+      font-size: 0.78rem;
+      border: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-gold:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+    .btn-outline-gold {
+      background: transparent;
+      color: var(--white);
+      padding: 0.9rem 2.2rem;
+      font-weight: 500;
+      font-size: 0.78rem;
+      border: 1px solid rgba(255,255,255,0.35);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-outline-gold:hover { border-color: var(--gold); color: var(--gold); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      right: 6%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 1;
+    }
+
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    }
+
+    /* ── INTRO STRIP ── */
+    .intro-strip {
+      background: var(--earth);
+      padding: 3rem 6%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .intro-item {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      border-right: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .intro-item:last-child { border-right: none; }
+
+    .intro-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .intro-label {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 6%; }
+
+    .section-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      color: var(--earth);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    .section-sub {
+      color: var(--gray);
+      font-size: 0.92rem;
+      line-height: 1.85;
+      max-width: 480px;
+      margin-bottom: 3.5rem;
+      font-weight: 300;
+    }
+
+    /* ── EXPERIENCES ── */
+    .experiences { background: var(--cream); }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .exp-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .exp-card:first-child { grid-row: span 2; }
+
+    .exp-img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .exp-card:first-child .exp-img { min-height: 580px; }
+    .exp-card:hover .exp-img { transform: scale(1.04); }
+
+    .exp-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44,24,16,0.9) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.8rem;
+    }
+
+    .exp-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .exp-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .exp-card:first-child .exp-name { font-size: 2.2rem; }
+
+    .exp-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 0.4rem;
+      font-weight: 300;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .exp-card:hover .exp-desc { max-height: 60px; }
+
+    /* ── WHY ── */
+    .why { background: var(--sand); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .why-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+
+    .why-items { display: flex; flex-direction: column; gap: 2rem; }
+
+    .why-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .why-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .why-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 40px;
+    }
+
+    .why-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--earth);
+      margin-bottom: 0.4rem;
+    }
+
+    .why-content p { font-size: 0.88rem; color: var(--gray); line-height: 1.8; font-weight: 300; }
+
+    /* ── DESTINATIONS ── */
+    .destinations { background: var(--earth); }
+    .destinations .section-title { color: var(--white); }
+    .destinations .section-sub { color: rgba(255,255,255,0.45); }
+
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(201,168,76,0.15);
+    }
+
+    .dest-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 2/3;
+    }
+
+    .dest-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+      filter: brightness(0.7);
+    }
+
+    .dest-card:hover .dest-img { transform: scale(1.06); filter: brightness(0.85); }
+
+    .dest-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem 1.2rem;
+    }
+
+    .dest-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .dest-detail { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--cream); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .testi-card {
+      padding: 2.5rem;
+      background: var(--white);
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .testi-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      color: var(--gold);
+      line-height: 0.5;
+      margin-bottom: 1.2rem;
+      opacity: 0.4;
+    }
+
+    .testi-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--earth);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .testi-divider { width: 32px; height: 1px; background: var(--gold); margin-bottom: 1rem; }
+    .testi-name { font-size: 0.82rem; font-weight: 600; color: var(--earth); letter-spacing: 0.08em; text-transform: uppercase; }
+    .testi-origin { font-size: 0.76rem; color: var(--gray); font-weight: 300; }
+
+    /* ── BOOKING ── */
+    .booking { background: var(--sand); }
+
+    .booking-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .booking-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--earth);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .booking-left h2 em { font-style: italic; color: var(--gold); }
+
+    .booking-left p { font-size: 0.9rem; color: var(--gray); line-height: 1.8; font-weight: 300; margin-bottom: 2rem; }
+
+    .contact-detail { display: flex; gap: 1rem; margin-bottom: 1.2rem; align-items: flex-start; }
+    .cd-icon { font-size: 1rem; color: var(--gold); margin-top: 2px; flex-shrink: 0; }
+    .cd-text strong { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray); margin-bottom: 0.2rem; }
+    .cd-text span { font-size: 0.9rem; color: var(--earth); font-weight: 500; }
+
+    .booking-form {
+      background: var(--earth);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .booking-form h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form-group label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(255,255,255,0.05);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.88rem;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .form-group select option { background: var(--earth); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bark);
+      padding: 4rem 6% 2.5rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand-logo span { color: var(--gold); }
+    .footer-brand p { font-size: 0.83rem; color: rgba(255,255,255,0.35); line-height: 1.8; font-weight: 300; max-width: 260px; }
+
+    .footer-col h4 {
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-col a { font-size: 0.83rem; color: rgba(255,255,255,0.35); text-decoration: none; font-weight: 300; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); font-weight: 300; }
+
+    .wa-float {
+      position: fixed;
+      bottom: 1.5rem; right: 1.5rem;
+      background: #25D366;
+      color: var(--white);
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+      z-index: 200;
+      transition: transform 0.2s;
+    }
+
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* loading shimmer for images */
+    .img-wrap {
+      position: relative;
+      overflow: hidden;
+      background: #2a1a10;
+    }
+
+    .img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.06), transparent);
+      animation: shimmer 2s infinite;
+      z-index: 1;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .img-wrap img { position: relative; z-index: 2; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .exp-grid { grid-template-columns: 1fr 1fr; }
+      .exp-card:first-child { grid-row: span 1; }
+      .dest-grid { grid-template-columns: repeat(2, 1fr); }
+      .testi-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .intro-strip { grid-template-columns: repeat(2, 1fr); }
+      .exp-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .why-img { aspect-ratio: 16/9; }
+      .booking-wrap { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .dest-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Savanna <span>&</span> Beyond</div>
+  <ul class="nav-links">
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#booking" class="nav-cta">Book a Safari</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Luxury Safari Experiences · Kenya</div>
+    <h1>Where the Wild<br/><em>Calls You Home</em></h1>
+    <p class="hero-sub">Bespoke safari journeys across Kenya's most breathtaking landscapes — crafted for those who seek more than a holiday. Tailored, intimate, unforgettable.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-gold">Plan Your Safari</a>
+      <a href="#experiences" class="btn-outline-gold">Explore Experiences</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- INTRO STRIP -->
+<div class="intro-strip">
+  <div class="intro-item"><div class="intro-num">15+</div><div class="intro-label">Years Experience</div></div>
+  <div class="intro-item"><div class="intro-num">500+</div><div class="intro-label">Safaris Completed</div></div>
+  <div class="intro-item"><div class="intro-num">12</div><div class="intro-label">Destinations</div></div>
+  <div class="intro-item"><div class="intro-num">98%</div><div class="intro-label">Guest Satisfaction</div></div>
+</div>
+
+<!-- EXPERIENCES -->
+<section class="experiences" id="experiences">
+  <div class="section-tag">Curated Journeys</div>
+  <h2 class="section-title">Safari <em>Experiences</em></h2>
+  <p class="section-sub">Every safari is designed around you — your pace, your interests, your definition of extraordinary.</p>
+  <div class="exp-grid">
+    <div class="exp-card img-wrap">
+      <img src="https://image.pollinations.ai/prompt/thousands%20wildebeest%20crossing%20wide%20African%20river%20dramatic%20splashing%20water%20golden%20afternoon%20light%20aerial%20perspective%20photorealistic%20wildlife%20photography%20cinematic%20no%20text%20no%20watermark?width=800&height=1100&seed=101&nologo=true" alt="Great Migration" class="exp-img"/>
+      <div class="exp-overlay">
+        <div class="exp-tag">Signature Experience</div>
+        <div class="exp-name">The Great Migration</div>
+        <div class="exp-desc">Witness millions of wildebeest cross the Mara River in one of nature's greatest spectacles.</div>
+      </div>
+    </div>
+    <div class="exp-card img-wrap">
+      <img src="https://image.pollinations.ai/prompt/majestic%20male%20lion%20resting%20golden%20savanna%20grass%20soft%20warm%20sunset%20light%20shallow%20depth%20of%20field%20luxury%20safari%20photography%20photorealistic%20cinematic%20no%20text%20no%20watermark?width=700&height=500&seed=202&nologo=true" alt="Big Five" class="exp-img"/>
+      <div class="exp-overlay">
+        <div class="exp-tag">Classic Safari</div>
+        <div class="exp-name">Big Five Quest</div>
+        <div class="exp-desc">Track lion, leopard, elephant, buffalo and rhino across Kenya's finest reserves.</div>
+      </div>
+    </div>
+    <div class="exp-card img-wrap">
+      <img src="https://image.pollinations.ai/prompt/single%20hot%20air%20balloon%20floating%20low%20over%20African%20savanna%20sunrise%20orange%20pink%20sky%20silhouetted%20acacia%20trees%20below%20photorealistic%20cinematic%20wide%20angle%20no%20text%20no%20watermark?width=700&height=500&seed=303&nologo=true" alt="Balloon Safari" class="exp-img"/>
+      <div class="exp-overlay">
+        <div class="exp-tag">Exclusive</div>
+        <div class="exp-name">Balloon Safari</div>
+        <div class="exp-desc">Float above the savanna at sunrise for a perspective no game drive can offer.</div>
+      </div>
+    </div>
+    <div class="exp-card img-wrap">
+      <img src="https://image.pollinations.ai/prompt/traditional%20Maasai%20beadwork%20jewelry%20closeup%20rich%20red%20fabric%20vibrant%20colors%20warm%20natural%20light%20detail%20product%20photography%20photorealistic%20no%20faces%20no%20text%20no%20watermark?width=700&height=500&seed=404&nologo=true" alt="Maasai Cultural" class="exp-img"/>
+      <div class="exp-overlay">
+        <div class="exp-tag">Cultural</div>
+        <div class="exp-name">Maasai Villages</div>
+        <div class="exp-desc">Immerse yourself in ancient traditions with authentic Maasai community visits.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="about">
+  <div class="why-grid">
+    <div class="img-wrap">
+      <img src="https://image.pollinations.ai/prompt/luxury%20safari%20tented%20camp%20interior%20night%20warm%20glowing%20lanterns%20linen%20draped%20bed%20open%20canvas%20walls%20showing%20dark%20savanna%20outside%20no%20people%20interior%20luxury%20travel%20photography%20cinematic%20warm%20tones%20no%20text%20no%20watermark?width=700&height=950&seed=505&nologo=true" alt="Luxury Camp" class="why-img"/>
+    </div>
+    <div class="why-right">
+      <div class="section-tag">Why Choose Us</div>
+      <h2 class="section-title">Safari Done <em>Differently</em></h2>
+      <p class="section-sub">We believe a safari should be transformative — not just a tick on a bucket list.</p>
+      <div class="why-items">
+        <div class="why-item">
+          <div class="why-num">01</div>
+          <div class="why-content"><h3>Fully Bespoke Itineraries</h3><p>No two safaris are the same. We design every journey around your interests, travel style, and timeline.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">02</div>
+          <div class="why-content"><h3>Expert Local Guides</h3><p>Our guides are born and raised in Kenya with decades of field experience. They read the bush like a book.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">03</div>
+          <div class="why-content"><h3>Handpicked Luxury Camps</h3><p>We partner only with camps that meet our standards — exceptional location, service, and minimal environmental impact.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">04</div>
+          <div class="why-content"><h3>24/7 On-Ground Support</h3><p>From the moment you land to the moment you depart — our team is always reachable, always ready.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section class="destinations" id="destinations">
+  <div class="section-tag">Where We Go</div>
+  <h2 class="section-title">Kenya's Finest <em>Destinations</em></h2>
+  <p class="section-sub">From the iconic Maasai Mara to the flamingo shores of Lake Nakuru — we know every corner of this extraordinary country.</p>
+  <div class="dest-grid">
+    <div class="dest-card img-wrap">
+      <img src="https://image.pollinations.ai/prompt/sweeping%20aerial%20view%20Maasai%20Mara%20landscape%20winding%20river%20green%20golden%20plains%20dramatic%20clouds%20photorealistic%20landscape%20photography%20cinematic%20no%20text%20no%20watermark?width=500&height=750&seed=601&nologo=true" alt="Maasai Mara" class="dest-img"/>
+      <div class="dest-overlay"><div class="dest-name">Maasai Mara</div><div class="dest-detail">Southwest Kenya</div></div>
+    </div>
+    <div class="dest-card img-wrap">
+      <img src="https://image.pollinations.ai/prompt/herd%20African%20elephants%20walking%20dry%20savanna%20snow%20capped%20Mount%20Kilimanjaro%20background%20golden%20hour%20light%20photorealistic%20wildlife%20photography%20no%20text%20no%20watermark?width=500&height=750&seed=602&nologo=true" alt="Amboseli" class="dest-img"/>
+      <div class="dest-overlay"><div class="dest-name">Amboseli</div><div class="dest-detail">Below Kilimanjaro</div></div>
+    </div>
+    <div class="dest-card img-wrap">
+      <img src="https://image.pollinations.ai/prompt/thousands%20pink%20flamingos%20covering%20shallow%20African%20lake%20aerial%20view%20soft%20pastel%20tones%20photorealistic%20nature%20photography%20wide%20angle%20no%20text%20no%20watermark?width=500&height=750&seed=603&nologo=true" alt="Lake Nakuru" class="dest-img"/>
+      <div class="dest-overlay"><div class="dest-name">Lake Nakuru</div><div class="dest-detail">Rift Valley</div></div>
+    </div>
+    <div class="dest-card img-wrap">
+      <img src="https://image.pollinations.ai/prompt/dramatic%20northern%20Kenya%20landscape%20dry%20riverbed%20desert%20rose%20bushes%20lone%20giraffe%20distance%20golden%20harsh%20light%20photorealistic%20cinematic%20no%20text%20no%20watermark?width=500&height=750&seed=604&nologo=true" alt="Samburu" class="dest-img"/>
+      <div class="dest-overlay"><div class="dest-name">Samburu</div><div class="dest-detail">Northern Kenya</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-tag">Guest Stories</div>
+  <h2 class="section-title">Words From Our <em>Guests</em></h2>
+  <p class="section-sub">From first-time safari travellers to seasoned adventurers — here is what they say.</p>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">The attention to detail was extraordinary. Our guide anticipated every wish before we even expressed it. The Mara at sunrise will stay with me forever.</p>
+      <div class="testi-divider"></div>
+      <div class="testi-name">James & Sarah T.</div>
+      <div class="testi-origin">London, United Kingdom</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">We have done safaris across Africa but Kenya with Savanna & Beyond was in a different league entirely. The camps, the guides, the game — all flawless.</p>
+      <div class="testi-divider"></div>
+      <div class="testi-name">Marc D.</div>
+      <div class="testi-origin">Paris, France</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Our family of five had completely different expectations and somehow they delivered for every single one of us. An absolutely magical two weeks.</p>
+      <div class="testi-divider"></div>
+      <div class="testi-name">The Anderson Family</div>
+      <div class="testi-origin">New York, USA</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-wrap">
+    <div class="booking-left">
+      <div class="section-tag">Get In Touch</div>
+      <h2>Begin Planning<br/>Your <em>Safari</em></h2>
+      <p>Tell us your dream and we will craft the perfect Kenya safari around it. No obligation — just a conversation about what's possible.</p>
+      <div class="contact-detail">
+        <div class="cd-icon">📞</div>
+        <div class="cd-text"><strong>Phone / WhatsApp</strong><span>+254 700 000 000</span></div>
+      </div>
+      <div class="contact-detail">
+        <div class="cd-icon">✉️</div>
+        <div class="cd-text"><strong>Email</strong><span>info@savannabeyond.co.ke</span></div>
+      </div>
+      <div class="contact-detail">
+        <div class="cd-icon">📍</div>
+        <div class="cd-text"><strong>Office</strong><span>Karen, Nairobi, Kenya</span></div>
+      </div>
+      <div class="contact-detail">
+        <div class="cd-icon">🕐</div>
+        <div class="cd-text"><strong>Office Hours</strong><span>Mon – Sat: 8AM – 6PM EAT</span></div>
+      </div>
+    </div>
+    <div class="booking-form">
+      <h3>Safari Enquiry</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name"/></div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Travel Dates</label><input type="text" placeholder="e.g. July 2025"/></div>
+        <div class="form-group">
+          <label>Group Size</label>
+          <select>
+            <option>Select...</option>
+            <option>1 – 2 Guests</option>
+            <option>3 – 4 Guests</option>
+            <option>5 – 8 Guests</option>
+            <option>9+ Guests</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Preferred Destination</label>
+        <select>
+          <option>Select destination...</option>
+          <option>Maasai Mara</option>
+          <option>Amboseli</option>
+          <option>Lake Nakuru</option>
+          <option>Samburu</option>
+          <option>Multi-destination</option>
+          <option>Unsure — advise me</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell Us Your Dream Safari</label>
+        <textarea placeholder="What kind of experience are you looking for?"></textarea>
+      </div>
+      <button class="btn-gold" style="width:100%; padding:1rem; font-size:0.78rem; letter-spacing:0.15em;">Send Enquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">Savanna <span>&</span> Beyond</div>
+      <p>Luxury bespoke safari experiences across Kenya. Crafted for the discerning traveller who seeks something truly extraordinary.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Experiences</h4>
+      <ul>
+        <li><a href="#">Great Migration</a></li>
+        <li><a href="#">Big Five Quest</a></li>
+        <li><a href="#">Balloon Safari</a></li>
+        <li><a href="#">Cultural Tours</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#">Maasai Mara</a></li>
+        <li><a href="#">Amboseli</a></li>
+        <li><a href="#">Lake Nakuru</a></li>
+        <li><a href="#">Samburu</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">+254 700 000 000</a></li>
+        <li><a href="#">info@savannabeyond.co.ke</a></li>
+        <li><a href="#">Karen, Nairobi</a></li>
+        <li><a href="#">Mon–Sat 8AM–6PM</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Savanna & Beyond. Nairobi, Kenya. All rights reserved.</p>
+    <p class="footer-copy">Licensed Safari Operator · Kenya Tourism Board Registered</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/254700000000" target="_blank" class="wa-float">💬</a>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+</script>
+
+</body>
+</html>
