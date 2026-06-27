@@ -4,20 +4,22 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Savanna & Beyond | Luxury Kenya Safari Experiences</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold:    #C9A84C;
-      --gold-lt: #E8D5A3;
-      --earth:   #2C1810;
-      --bark:    #3D2314;
-      --sand:    #F5EFE0;
-      --cream:   #FAF7F0;
-      --white:   #FFFFFF;
-      --gray:    #7A7060;
-      --olive:   #4A4A2A;
+      --gold:     #C9A84C;
+      --gold-lt:  #E8D5A3;
+      --gold-dk:  #9A7A2E;
+      --earth:    #1E1008;
+      --bark:     #2C1810;
+      --mahogany: #3D2314;
+      --sand:     #F5EFE0;
+      --cream:    #FAF7F0;
+      --white:    #FFFFFF;
+      --gray:     #7A7060;
+      --mist:     rgba(255,255,255,0.06);
     }
 
     html { scroll-behavior: smooth; }
@@ -29,396 +31,614 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    /* ═══════════════════════════════
+       CURSOR GLOW
+    ═══════════════════════════════ */
+    .cursor-glow {
+      position: fixed;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+    }
+
+    /* ═══════════════════════════════
+       NAV
+    ═══════════════════════════════ */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 500;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 6%;
-      height: 72px;
-      background: transparent;
-      transition: background 0.4s;
+      height: 76px;
+      transition: background 0.5s, box-shadow 0.4s;
     }
 
     nav.scrolled {
-      background: rgba(44,24,16,0.96);
-      backdrop-filter: blur(8px);
+      background: rgba(30,16,8,0.97);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(201,168,76,0.12);
     }
 
     .nav-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 600;
       color: var(--white);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
-    .nav-logo span { color: var(--gold); }
+    .nav-logo .amp { color: var(--gold); font-style: italic; font-weight: 300; }
 
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 2.8rem;
       list-style: none;
       align-items: center;
     }
 
     .nav-links a {
-      color: rgba(255,255,255,0.75);
+      color: rgba(255,255,255,0.6);
       text-decoration: none;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      transition: color 0.2s;
+      transition: color 0.25s;
+      position: relative;
     }
 
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
 
     .nav-cta {
-      border: 1px solid var(--gold) !important;
+      border: 1px solid rgba(201,168,76,0.5) !important;
       color: var(--gold) !important;
-      padding: 0.5rem 1.4rem;
+      padding: 0.55rem 1.5rem;
+      transition: background 0.2s, border-color 0.2s !important;
     }
 
-    /* ── HERO ── */
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: rgba(201,168,76,0.1) !important; border-color: var(--gold) !important; }
+
+    /* ═══════════════════════════════
+       HERO — FULL VIEWPORT, CINEMATIC
+    ═══════════════════════════════ */
     .hero {
       height: 100vh;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 0 6% 6rem;
+      padding: 0 6% 7rem;
       overflow: hidden;
     }
 
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('https://image.pollinations.ai/prompt/cinematic%20wide%20angle%20aerial%20view%20vast%20African%20savanna%20golden%20hour%20acacia%20trees%20silhouetted%20dramatic%20orange%20red%20sky%20single%20elephant%20walking%20photorealistic%20luxury%20travel%20photography%20ultra%20detailed%20no%20text%20no%20watermark?width=1600&height=900&seed=42&nologo=true');
+      background-image: url('https://image.pollinations.ai/prompt/cinematic%20aerial%20African%20savanna%20at%20golden%20hour%20vast%20plains%20acacia%20trees%20silhouette%20dramatic%20orange%20amber%20sky%20lone%20elephant%20walking%20dust%20rays%20of%20light%20ultra%20photorealistic%20luxury%20travel%20no%20text%20no%20watermark?width=1920&height=1080&seed=42&nologo=true');
       background-size: cover;
-      background-position: center;
+      background-position: center 30%;
+      transform: scale(1.06);
+      animation: heroZoom 20s ease-out forwards;
     }
 
-    .hero-bg::after {
-      content: '';
+    @keyframes heroZoom {
+      0%   { transform: scale(1.06); }
+      100% { transform: scale(1.0); }
+    }
+
+    .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(44,24,16,0.92) 0%, rgba(44,24,16,0.3) 50%, rgba(44,24,16,0.5) 100%);
+      background:
+        linear-gradient(to top,  rgba(30,16,8,0.95) 0%,  rgba(30,16,8,0.3) 45%, transparent 70%),
+        linear-gradient(to right, rgba(30,16,8,0.5) 0%, transparent 60%);
+    }
+
+    /* Grain texture overlay */
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px;
+      pointer-events: none;
     }
 
     .hero-content {
       position: relative;
-      z-index: 1;
+      z-index: 2;
+      animation: heroReveal 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s both;
     }
 
-    .hero-tag {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 1rem;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
     }
 
-    .hero-tag::before {
-      content: '';
-      width: 32px; height: 1px;
-      background: var(--gold);
-    }
+    .hero-eyebrow-line { width: 40px; height: 1px; background: var(--gold); opacity: 0.7; }
 
     .hero h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 8vw, 7rem);
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
       font-weight: 300;
-      line-height: 1.05;
+      line-height: 1.0;
       color: var(--white);
-      max-width: 800px;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.01em;
+      max-width: 820px;
+      margin-bottom: 1.8rem;
+      letter-spacing: -0.02em;
     }
 
-    .hero h1 em { font-style: italic; color: var(--gold-lt); }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-lt);
+      display: block;
+    }
 
     .hero-sub {
-      color: rgba(255,255,255,0.65);
-      font-size: 0.95rem;
-      line-height: 1.8;
-      max-width: 480px;
-      margin-bottom: 2.5rem;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.92rem;
+      line-height: 1.9;
+      max-width: 420px;
+      margin-bottom: 3rem;
       font-weight: 300;
+      letter-spacing: 0.02em;
     }
 
-    .hero-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
 
     .btn-gold {
       background: var(--gold);
       color: var(--earth);
-      padding: 0.9rem 2.2rem;
+      padding: 1rem 2.4rem;
       font-weight: 600;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       border: none;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
     }
 
-    .btn-gold:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .btn-gold:hover {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(201,168,76,0.25);
+    }
 
-    .btn-outline-gold {
+    .btn-ghost-gold {
       background: transparent;
-      color: var(--white);
-      padding: 0.9rem 2.2rem;
-      font-weight: 500;
-      font-size: 0.78rem;
-      border: 1px solid rgba(255,255,255,0.35);
-      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.75);
+      padding: 1rem 2.4rem;
+      font-weight: 400;
+      font-size: 0.72rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
-      transition: border-color 0.2s, color 0.2s;
+      transition: border-color 0.25s, color 0.25s;
     }
 
-    .btn-outline-gold:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-ghost-gold:hover { border-color: var(--gold); color: var(--gold); }
 
-    .scroll-hint {
+    /* Scroll indicator */
+    .scroll-indicator {
       position: absolute;
-      bottom: 2rem;
+      bottom: 2.5rem;
       right: 6%;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
-      color: rgba(255,255,255,0.4);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
+      gap: 0.6rem;
+      animation: heroReveal 1.2s cubic-bezier(0.22,1,0.36,1) 1s both;
+    }
+
+    .scroll-text {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      z-index: 1;
+      color: rgba(255,255,255,0.3);
+      writing-mode: vertical-rl;
     }
 
-    .scroll-line {
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    .scroll-line-anim {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
     }
 
-    /* ── INTRO STRIP ── */
-    .intro-strip {
-      background: var(--earth);
-      padding: 3rem 6%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
     }
 
-    .intro-item {
+    /* Floating stat cards on hero */
+    .hero-stats {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      animation: heroReveal 1.2s cubic-bezier(0.22,1,0.36,1) 0.7s both;
+    }
+
+    .hero-stat {
+      background: rgba(30,16,8,0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.2rem 1.6rem;
       text-align: center;
-      padding: 1.5rem 1rem;
-      border-right: 1px solid rgba(201,168,76,0.2);
+      min-width: 120px;
     }
 
-    .intro-item:last-child { border-right: none; }
-
-    .intro-num {
+    .hero-stat-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.8rem;
+      font-size: 2.2rem;
       font-weight: 300;
       color: var(--gold);
       line-height: 1;
       margin-bottom: 0.3rem;
     }
 
-    .intro-label {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.15em;
+    .hero-stat-lbl {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
     }
 
-    /* ── SECTIONS ── */
-    section { padding: 6rem 6%; }
+    /* ═══════════════════════════════
+       MARQUEE STRIP
+    ═══════════════════════════════ */
+    .marquee-strip {
+      background: var(--gold);
+      padding: 0.85rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
 
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 30s linear infinite;
+    }
+
+    .marquee-item {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--earth);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .marquee-item::after {
+      content: '◆';
+      font-size: 0.4rem;
+      opacity: 0.5;
+    }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ═══════════════════════════════
+       SECTION COMMONS
+    ═══════════════════════════════ */
     .section-tag {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 500;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 1rem;
     }
 
-    .section-tag::before {
-      content: '';
-      width: 24px; height: 1px;
-      background: var(--gold);
-    }
+    .section-tag::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
 
     .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
       font-weight: 300;
       color: var(--earth);
-      line-height: 1.1;
+      line-height: 1.08;
       margin-bottom: 1rem;
-      letter-spacing: -0.01em;
     }
 
     .section-title em { font-style: italic; color: var(--gold); }
+    .section-title.light { color: var(--white); }
 
     .section-sub {
       color: var(--gray);
-      font-size: 0.92rem;
-      line-height: 1.85;
-      max-width: 480px;
+      font-size: 0.9rem;
+      line-height: 1.9;
+      max-width: 460px;
       margin-bottom: 3.5rem;
       font-weight: 300;
     }
 
-    /* ── EXPERIENCES ── */
-    .experiences { background: var(--cream); }
+    .section-sub.light { color: rgba(255,255,255,0.4); }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ═══════════════════════════════
+       EXPERIENCES
+    ═══════════════════════════════ */
+    .experiences {
+      padding: 7rem 6%;
+      background: var(--cream);
+    }
 
     .exp-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 2px;
+      background: rgba(201,168,76,0.1);
     }
 
     .exp-card {
       position: relative;
       overflow: hidden;
       cursor: pointer;
+      background: var(--bark);
     }
 
-    .exp-card:first-child { grid-row: span 2; }
+    .exp-card.tall { grid-row: span 2; }
 
     .exp-img {
       width: 100%;
       height: 100%;
-      min-height: 280px;
+      min-height: 260px;
       object-fit: cover;
       display: block;
-      transition: transform 0.6s ease;
+      transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.4s;
+      filter: brightness(0.75) saturate(0.9);
     }
 
-    .exp-card:first-child .exp-img { min-height: 580px; }
-    .exp-card:hover .exp-img { transform: scale(1.04); }
+    .exp-card.tall .exp-img { min-height: 540px; }
+    .exp-card:hover .exp-img { transform: scale(1.06); filter: brightness(0.9) saturate(1.1); }
 
     .exp-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(44,24,16,0.9) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(30,16,8,0.92) 0%, rgba(30,16,8,0.1) 55%, transparent 100%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 1.8rem;
+      padding: 2rem;
+      transition: background 0.4s;
+    }
+
+    .exp-card:hover .exp-overlay {
+      background: linear-gradient(to top, rgba(30,16,8,0.95) 0%, rgba(30,16,8,0.25) 55%, transparent 100%);
     }
 
     .exp-tag {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
     }
 
     .exp-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       font-weight: 400;
       color: var(--white);
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
-    .exp-card:first-child .exp-name { font-size: 2.2rem; }
+    .exp-card.tall .exp-name { font-size: 2.4rem; }
 
     .exp-desc {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.65);
-      margin-top: 0.4rem;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.6rem;
       font-weight: 300;
+      line-height: 1.65;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
+      transition: max-height 0.4s ease, opacity 0.4s;
+      opacity: 0;
     }
 
-    .exp-card:hover .exp-desc { max-height: 60px; }
+    .exp-card:hover .exp-desc { max-height: 80px; opacity: 1; }
 
-    /* ── WHY ── */
-    .why { background: var(--sand); }
+    .exp-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 1rem;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
 
-    .why-grid {
+    .exp-card:hover .exp-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ═══════════════════════════════
+       SIGNATURE DIVIDER
+    ═══════════════════════════════ */
+    .gold-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 3.5rem 6%;
+      background: var(--sand);
+    }
+
+    .gold-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent); }
+    .gold-divider-icon { color: var(--gold); font-size: 1rem; opacity: 0.6; }
+
+    /* ═══════════════════════════════
+       WHY US — SPLIT LAYOUT
+    ═══════════════════════════════ */
+    .why {
+      background: var(--sand);
+      padding: 7rem 6%;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 5rem;
+      gap: 6rem;
       align-items: center;
     }
 
-    .why-img {
+    .why-visual {
+      position: relative;
+    }
+
+    .why-img-main {
       width: 100%;
-      aspect-ratio: 3/4;
+      aspect-ratio: 4/5;
       object-fit: cover;
       display: block;
     }
 
-    .why-items { display: flex; flex-direction: column; gap: 2rem; }
+    .why-img-inset {
+      position: absolute;
+      bottom: -2rem;
+      right: -2rem;
+      width: 45%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border: 4px solid var(--sand);
+      box-shadow: 0 20px 60px rgba(30,16,8,0.25);
+    }
+
+    .why-gold-bar {
+      position: absolute;
+      top: 2rem;
+      left: -1.5rem;
+      width: 4px;
+      height: 80px;
+      background: var(--gold);
+    }
+
+    .why-items { display: flex; flex-direction: column; gap: 0; }
 
     .why-item {
       display: flex;
       gap: 1.5rem;
       align-items: flex-start;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 1.8rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      transition: padding-left 0.3s;
     }
 
-    .why-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .why-item:first-child { padding-top: 0; }
+    .why-item:last-child { border-bottom: none; }
+    .why-item:hover { padding-left: 0.5rem; }
 
     .why-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 300;
       color: var(--gold);
       line-height: 1;
       flex-shrink: 0;
-      width: 40px;
+      width: 36px;
+      opacity: 0.6;
     }
 
     .why-content h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 600;
       color: var(--earth);
       margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
     }
 
-    .why-content p { font-size: 0.88rem; color: var(--gray); line-height: 1.8; font-weight: 300; }
+    .why-content p { font-size: 0.86rem; color: var(--gray); line-height: 1.8; font-weight: 300; }
 
-    /* ── DESTINATIONS ── */
-    .destinations { background: var(--earth); }
-    .destinations .section-title { color: var(--white); }
-    .destinations .section-sub { color: rgba(255,255,255,0.45); }
+    /* ═══════════════════════════════
+       DESTINATIONS — DARK FULL-BLEED
+    ═══════════════════════════════ */
+    .destinations {
+      background: var(--earth);
+      padding: 7rem 6%;
+    }
 
     .dest-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(201,168,76,0.15);
+      gap: 2px;
+      background: rgba(201,168,76,0.08);
+      margin-top: 3.5rem;
     }
 
     .dest-card {
       position: relative;
       overflow: hidden;
       aspect-ratio: 2/3;
+      cursor: pointer;
+      background: var(--bark);
     }
 
     .dest-img {
@@ -426,192 +646,364 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.5s ease;
-      filter: brightness(0.7);
+      filter: brightness(0.6) saturate(0.8);
+      transition: filter 0.5s, transform 0.7s cubic-bezier(0.22,1,0.36,1);
     }
 
-    .dest-card:hover .dest-img { transform: scale(1.06); filter: brightness(0.85); }
+    .dest-card:hover .dest-img { filter: brightness(0.8) saturate(1.1); transform: scale(1.07); }
 
     .dest-overlay {
       position: absolute;
       inset: 0;
+      background: linear-gradient(to top, rgba(30,16,8,0.9) 0%, transparent 55%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 1.5rem 1.2rem;
+      padding: 1.5rem 1.3rem;
+    }
+
+    .dest-region {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
     }
 
     .dest-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 400;
       color: var(--white);
-      margin-bottom: 0.2rem;
+      line-height: 1.1;
     }
 
-    .dest-detail { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
+    .dest-highlight {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.4rem;
+      font-weight: 300;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s;
+    }
 
-    /* ── TESTIMONIALS ── */
-    .testimonials { background: var(--cream); }
+    .dest-card:hover .dest-highlight { max-height: 40px; }
+
+    /* ═══════════════════════════════
+       FULL-BLEED QUOTE
+    ═══════════════════════════════ */
+    .pullquote {
+      position: relative;
+      padding: 8rem 6%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .pullquote-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://image.pollinations.ai/prompt/close%20up%20golden%20hour%20light%20through%20acacia%20tree%20branches%20silhouette%20warm%20amber%20bokeh%20african%20savanna%20photorealistic%20cinematic%20no%20text%20no%20watermark?width=1600&height=700&seed=88&nologo=true');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.3) saturate(0.8);
+    }
+
+    .pullquote-content { position: relative; z-index: 1; max-width: 680px; }
+
+    .pq-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      color: var(--gold);
+      line-height: 0.5;
+      margin-bottom: 2rem;
+      opacity: 0.4;
+    }
+
+    .pq-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    .pq-attr {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ═══════════════════════════════
+       TESTIMONIALS
+    ═══════════════════════════════ */
+    .testimonials {
+      background: var(--cream);
+      padding: 7rem 6%;
+    }
 
     .testi-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      gap: 2px;
+      background: rgba(201,168,76,0.1);
+      margin-top: 3.5rem;
     }
 
     .testi-card {
-      padding: 2.5rem;
       background: var(--white);
-      border: 1px solid rgba(201,168,76,0.2);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .testi-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 4rem;
+    .testi-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(30,16,8,0.1);
+      z-index: 1;
+    }
+
+    .testi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--gold);
+      transition: height 0.4s;
+    }
+
+    .testi-card:hover::before { height: 100%; }
+
+    .testi-stars {
       color: var(--gold);
-      line-height: 0.5;
-      margin-bottom: 1.2rem;
-      opacity: 0.4;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
     }
 
     .testi-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       color: var(--earth);
       line-height: 1.75;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       font-style: italic;
       font-weight: 300;
     }
 
-    .testi-divider { width: 32px; height: 1px; background: var(--gold); margin-bottom: 1rem; }
-    .testi-name { font-size: 0.82rem; font-weight: 600; color: var(--earth); letter-spacing: 0.08em; text-transform: uppercase; }
-    .testi-origin { font-size: 0.76rem; color: var(--gray); font-weight: 300; }
+    .testi-divider { width: 28px; height: 1px; background: var(--gold); margin-bottom: 1rem; opacity: 0.5; }
+    .testi-name { font-size: 0.78rem; font-weight: 600; color: var(--earth); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.2rem; }
+    .testi-origin { font-size: 0.75rem; color: var(--gray); font-weight: 300; }
 
-    /* ── BOOKING ── */
-    .booking { background: var(--sand); }
+    /* ═══════════════════════════════
+       BOOKING FORM
+    ═══════════════════════════════ */
+    .booking {
+      background: var(--sand);
+      padding: 7rem 6%;
+    }
 
     .booking-wrap {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 5rem;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 6rem;
       align-items: start;
     }
 
     .booking-left h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
       font-weight: 300;
       color: var(--earth);
       line-height: 1.1;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     .booking-left h2 em { font-style: italic; color: var(--gold); }
 
-    .booking-left p { font-size: 0.9rem; color: var(--gray); line-height: 1.8; font-weight: 300; margin-bottom: 2rem; }
+    .booking-left p { font-size: 0.88rem; color: var(--gray); line-height: 1.85; font-weight: 300; margin-bottom: 2.5rem; }
 
-    .contact-detail { display: flex; gap: 1rem; margin-bottom: 1.2rem; align-items: flex-start; }
-    .cd-icon { font-size: 1rem; color: var(--gold); margin-top: 2px; flex-shrink: 0; }
-    .cd-text strong { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray); margin-bottom: 0.2rem; }
-    .cd-text span { font-size: 0.9rem; color: var(--earth); font-weight: 500; }
+    .contact-item { display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 1.4rem; }
+    .ci-icon { color: var(--gold); font-size: 0.9rem; margin-top: 3px; flex-shrink: 0; }
+    .ci-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.2rem; }
+    .ci-value { font-size: 0.9rem; color: var(--earth); font-weight: 500; }
 
     .booking-form {
       background: var(--earth);
-      padding: 3rem;
+      padding: 3.5rem;
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .booking-form::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(to right, var(--gold-dk), var(--gold), var(--gold-dk));
     }
 
     .booking-form h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 300;
       color: var(--white);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.2rem;
     }
+
+    .booking-form h3 em { font-style: italic; color: var(--gold-lt); }
 
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 
     .form-group label {
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.3);
     }
 
     .form-group input,
     .form-group select,
     .form-group textarea {
-      padding: 0.85rem 1rem;
-      border: 1px solid rgba(201,168,76,0.2);
-      background: rgba(255,255,255,0.05);
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(201,168,76,0.15);
+      border-bottom-color: rgba(201,168,76,0.3);
+      background: rgba(255,255,255,0.04);
       font-family: 'Jost', sans-serif;
       font-size: 0.88rem;
       color: var(--white);
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.25s, background 0.25s;
     }
 
     .form-group input::placeholder,
-    .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
-    .form-group select option { background: var(--earth); }
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.18); }
+    .form-group select option { background: var(--bark); }
     .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea:focus {
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(255,255,255,0.07);
+    }
     .form-group textarea { resize: vertical; min-height: 100px; }
 
-    /* ── FOOTER ── */
+    .form-submit {
+      background: var(--gold);
+      color: var(--earth);
+      border: none;
+      padding: 1.1rem 2rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.25s, transform 0.2s;
+    }
+
+    .form-submit:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
     footer {
-      background: var(--bark);
-      padding: 4rem 6% 2.5rem;
+      background: var(--earth);
+      padding: 5rem 6% 3rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
     }
 
     .footer-top {
       display: grid;
       grid-template-columns: 1.8fr 1fr 1fr 1fr;
-      gap: 3rem;
-      padding-bottom: 3rem;
-      border-bottom: 1px solid rgba(201,168,76,0.15);
-      margin-bottom: 2rem;
+      gap: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      margin-bottom: 2.5rem;
     }
 
-    .footer-brand-logo {
+    .footer-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 600;
       color: var(--white);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .footer-brand-logo span { color: var(--gold); }
-    .footer-brand p { font-size: 0.83rem; color: rgba(255,255,255,0.35); line-height: 1.8; font-weight: 300; max-width: 260px; }
-
-    .footer-col h4 {
-      font-size: 0.68rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--gold);
       margin-bottom: 1.2rem;
     }
 
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
-    .footer-col a { font-size: 0.83rem; color: rgba(255,255,255,0.35); text-decoration: none; font-weight: 300; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--gold); }
+    .footer-logo .amp { color: var(--gold); font-style: italic; font-weight: 300; }
+    .footer-brand p { font-size: 0.83rem; color: rgba(255,255,255,0.28); line-height: 1.85; font-weight: 300; max-width: 260px; margin-bottom: 1.5rem; }
 
-    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-    .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); font-weight: 300; }
+    .footer-social { display: flex; gap: 1rem; }
+    .footer-social-link {
+      width: 34px; height: 34px;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-social-link:hover { border-color: var(--gold); color: var(--gold); }
 
+    .footer-col h4 {
+      font-size: 0.63rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .footer-col a { font-size: 0.82rem; color: rgba(255,255,255,0.3); text-decoration: none; font-weight: 300; transition: color 0.2s, padding-left 0.2s; display: block; }
+    .footer-col a:hover { color: var(--gold-lt); padding-left: 4px; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy { font-size: 0.73rem; color: rgba(255,255,255,0.18); font-weight: 300; }
+
+    .footer-credit {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.18);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-credit a {
+      color: rgba(201,168,76,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-credit a:hover { color: var(--gold); }
+
+    /* WhatsApp float */
     .wa-float {
       position: fixed;
-      bottom: 1.5rem; right: 1.5rem;
+      bottom: 1.8rem; right: 1.8rem;
       background: #25D366;
       color: var(--white);
       width: 54px; height: 54px;
@@ -619,66 +1011,55 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       text-decoration: none;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.3);
-      z-index: 200;
-      transition: transform 0.2s;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.35);
+      z-index: 400;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .wa-float:hover { transform: scale(1.1); }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(37,211,102,0.45); }
 
-    /* loading shimmer for images */
-    .img-wrap {
-      position: relative;
-      overflow: hidden;
-      background: #2a1a10;
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 1200px) {
+      .hero-stats { display: none; }
     }
 
-    .img-wrap::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.06), transparent);
-      animation: shimmer 2s infinite;
-      z-index: 1;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .img-wrap img { position: relative; z-index: 2; }
-
-    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
       .exp-grid { grid-template-columns: 1fr 1fr; }
-      .exp-card:first-child { grid-row: span 1; }
+      .exp-card.tall { grid-row: span 1; }
       .dest-grid { grid-template-columns: repeat(2, 1fr); }
       .testi-grid { grid-template-columns: 1fr 1fr; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .intro-strip { grid-template-columns: repeat(2, 1fr); }
-      .exp-grid { grid-template-columns: 1fr; }
-      .why-grid { grid-template-columns: 1fr; }
-      .why-img { aspect-ratio: 16/9; }
-      .booking-wrap { grid-template-columns: 1fr; gap: 2rem; }
+      .hero { padding: 0 5% 5rem; }
+      .why { grid-template-columns: 1fr; gap: 3rem; }
+      .why-img-inset { display: none; }
+      .why-img-main { aspect-ratio: 16/9; }
+      .booking-wrap { grid-template-columns: 1fr; gap: 3rem; }
       .form-row { grid-template-columns: 1fr; }
       .testi-grid { grid-template-columns: 1fr; }
-      .dest-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-bg, .reveal, .cursor-glow { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
 
+<div class="cursor-glow" id="cursorGlow"></div>
+
 <!-- NAV -->
 <nav id="navbar">
-  <div class="nav-logo">Savanna <span>&</span> Beyond</div>
+  <a href="#" class="nav-logo">Savanna <span class="amp">&</span> Beyond</a>
   <ul class="nav-links">
     <li><a href="#experiences">Experiences</a></li>
     <li><a href="#destinations">Destinations</a></li>
@@ -688,98 +1069,170 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">15<span style="font-size:1.2rem">+</span></div>
+      <div class="hero-stat-lbl">Years</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">500<span style="font-size:1.2rem">+</span></div>
+      <div class="hero-stat-lbl">Safaris</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">98<span style="font-size:1.2rem">%</span></div>
+      <div class="hero-stat-lbl">Satisfaction</div>
+    </div>
+  </div>
+
   <div class="hero-content">
-    <div class="hero-tag">Luxury Safari Experiences · Kenya</div>
-    <h1>Where the Wild<br/><em>Calls You Home</em></h1>
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      Luxury Safari Experiences · Kenya
+    </div>
+    <h1>
+      Where the Wild<br/>
+      <em>Calls You Home</em>
+    </h1>
     <p class="hero-sub">Bespoke safari journeys across Kenya's most breathtaking landscapes — crafted for those who seek more than a holiday. Tailored, intimate, unforgettable.</p>
     <div class="hero-actions">
       <a href="#booking" class="btn-gold">Plan Your Safari</a>
-      <a href="#experiences" class="btn-outline-gold">Explore Experiences</a>
+      <a href="#experiences" class="btn-ghost-gold">Explore Experiences</a>
     </div>
   </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    Scroll
+
+  <div class="scroll-indicator">
+    <div class="scroll-line-anim"></div>
+    <div class="scroll-text">Scroll</div>
   </div>
 </section>
 
-<!-- INTRO STRIP -->
-<div class="intro-strip">
-  <div class="intro-item"><div class="intro-num">15+</div><div class="intro-label">Years Experience</div></div>
-  <div class="intro-item"><div class="intro-num">500+</div><div class="intro-label">Safaris Completed</div></div>
-  <div class="intro-item"><div class="intro-num">12</div><div class="intro-label">Destinations</div></div>
-  <div class="intro-item"><div class="intro-num">98%</div><div class="intro-label">Guest Satisfaction</div></div>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <div class="marquee-item">Masai Mara</div>
+    <div class="marquee-item">Amboseli</div>
+    <div class="marquee-item">Tsavo</div>
+    <div class="marquee-item">Samburu</div>
+    <div class="marquee-item">Lake Nakuru</div>
+    <div class="marquee-item">Laikipia</div>
+    <div class="marquee-item">Ol Pejeta</div>
+    <div class="marquee-item">Lewa Conservancy</div>
+    <div class="marquee-item">Masai Mara</div>
+    <div class="marquee-item">Amboseli</div>
+    <div class="marquee-item">Tsavo</div>
+    <div class="marquee-item">Samburu</div>
+    <div class="marquee-item">Lake Nakuru</div>
+    <div class="marquee-item">Laikipia</div>
+    <div class="marquee-item">Ol Pejeta</div>
+    <div class="marquee-item">Lewa Conservancy</div>
+  </div>
 </div>
 
 <!-- EXPERIENCES -->
 <section class="experiences" id="experiences">
-  <div class="section-tag">Curated Journeys</div>
-  <h2 class="section-title">Safari <em>Experiences</em></h2>
-  <p class="section-sub">Every safari is designed around you — your pace, your interests, your definition of extraordinary.</p>
-  <div class="exp-grid">
-    <div class="exp-card img-wrap">
-      <img src="https://image.pollinations.ai/prompt/thousands%20wildebeest%20crossing%20wide%20African%20river%20dramatic%20splashing%20water%20golden%20afternoon%20light%20aerial%20perspective%20photorealistic%20wildlife%20photography%20cinematic%20no%20text%20no%20watermark?width=800&height=1100&seed=101&nologo=true" alt="Great Migration" class="exp-img"/>
+  <div class="reveal"><div class="section-tag">Curated Journeys</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-title">Safari <em>Experiences</em></h2></div>
+  <div class="reveal reveal-delay-2"><p class="section-sub">Every safari is designed around you — your pace, your interests, your definition of extraordinary.</p></div>
+
+  <div class="exp-grid reveal reveal-delay-3">
+    <div class="exp-card tall">
+      <img src="https://image.pollinations.ai/prompt/dramatic%20wildebeest%20migration%20crossing%20mara%20river%20thousands%20animals%20splashing%20water%20aerial%20view%20golden%20afternoon%20light%20photorealistic%20wildlife%20no%20text%20no%20watermark?width=700&height=1100&seed=101&nologo=true" class="exp-img" alt="Great Migration"/>
       <div class="exp-overlay">
-        <div class="exp-tag">Signature Experience</div>
-        <div class="exp-name">The Great Migration</div>
-        <div class="exp-desc">Witness millions of wildebeest cross the Mara River in one of nature's greatest spectacles.</div>
+        <div class="exp-tag">Iconic · Seasonal</div>
+        <div class="exp-name">The Great<br/>Migration</div>
+        <div class="exp-desc">Witness two million wildebeest thunder across the Mara River in the greatest wildlife spectacle on earth.</div>
+        <div class="exp-arrow">Discover →</div>
       </div>
     </div>
-    <div class="exp-card img-wrap">
-      <img src="https://image.pollinations.ai/prompt/majestic%20male%20lion%20resting%20golden%20savanna%20grass%20soft%20warm%20sunset%20light%20shallow%20depth%20of%20field%20luxury%20safari%20photography%20photorealistic%20cinematic%20no%20text%20no%20watermark?width=700&height=500&seed=202&nologo=true" alt="Big Five" class="exp-img"/>
+    <div class="exp-card">
+      <img src="https://image.pollinations.ai/prompt/hot%20air%20balloon%20floating%20over%20african%20savanna%20sunrise%20golden%20light%20zebras%20below%20kenya%20photorealistic%20luxury%20travel%20no%20text%20no%20watermark?width=600&height=420&seed=202&nologo=true" class="exp-img" alt="Balloon Safari"/>
       <div class="exp-overlay">
-        <div class="exp-tag">Classic Safari</div>
-        <div class="exp-name">Big Five Quest</div>
-        <div class="exp-desc">Track lion, leopard, elephant, buffalo and rhino across Kenya's finest reserves.</div>
-      </div>
-    </div>
-    <div class="exp-card img-wrap">
-      <img src="https://image.pollinations.ai/prompt/single%20hot%20air%20balloon%20floating%20low%20over%20African%20savanna%20sunrise%20orange%20pink%20sky%20silhouetted%20acacia%20trees%20below%20photorealistic%20cinematic%20wide%20angle%20no%20text%20no%20watermark?width=700&height=500&seed=303&nologo=true" alt="Balloon Safari" class="exp-img"/>
-      <div class="exp-overlay">
-        <div class="exp-tag">Exclusive</div>
+        <div class="exp-tag">Aerial · Sunrise</div>
         <div class="exp-name">Balloon Safari</div>
-        <div class="exp-desc">Float above the savanna at sunrise for a perspective no game drive can offer.</div>
+        <div class="exp-desc">Drift silently above the plains as dawn breaks gold over the savanna.</div>
+        <div class="exp-arrow">Discover →</div>
       </div>
     </div>
-    <div class="exp-card img-wrap">
-      <img src="https://image.pollinations.ai/prompt/traditional%20Maasai%20beadwork%20jewelry%20closeup%20rich%20red%20fabric%20vibrant%20colors%20warm%20natural%20light%20detail%20product%20photography%20photorealistic%20no%20faces%20no%20text%20no%20watermark?width=700&height=500&seed=404&nologo=true" alt="Maasai Cultural" class="exp-img"/>
+    <div class="exp-card">
+      <img src="https://image.pollinations.ai/prompt/luxury%20safari%20tent%20camp%20night%20stars%20milky%20way%20african%20bush%20lanterns%20glowing%20photorealistic%20no%20text%20no%20watermark?width=600&height=420&seed=303&nologo=true" class="exp-img" alt="Bush Camp"/>
       <div class="exp-overlay">
-        <div class="exp-tag">Cultural</div>
-        <div class="exp-name">Maasai Villages</div>
-        <div class="exp-desc">Immerse yourself in ancient traditions with authentic Maasai community visits.</div>
+        <div class="exp-tag">Immersive · Overnight</div>
+        <div class="exp-name">Luxury Bush Camp</div>
+        <div class="exp-desc">Sleep under the stars in a private tented camp, with sounds of the wild as your lullaby.</div>
+        <div class="exp-arrow">Discover →</div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <img src="https://image.pollinations.ai/prompt/maasai%20warrior%20jumping%20traditional%20ceremony%20kenya%20dusty%20golden%20hour%20photorealistic%20cultural%20photography%20no%20text%20no%20watermark?width=600&height=420&seed=404&nologo=true" class="exp-img" alt="Cultural"/>
+      <div class="exp-overlay">
+        <div class="exp-tag">Cultural · Authentic</div>
+        <div class="exp-name">Maasai Encounters</div>
+        <div class="exp-desc">Walk with Maasai warriors, learn ancient traditions, and share a meal under the acacia.</div>
+        <div class="exp-arrow">Discover →</div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <img src="https://image.pollinations.ai/prompt/african%20elephant%20family%20at%20waterhole%20sunset%20reflection%20amber%20sky%20photorealistic%20wildlife%20photography%20no%20text%20no%20watermark?width=600&height=420&seed=505&nologo=true" class="exp-img" alt="Photography"/>
+      <div class="exp-overlay">
+        <div class="exp-tag">Creative · Expert-led</div>
+        <div class="exp-name">Photography Safari</div>
+        <div class="exp-desc">Go out with a professional wildlife photographer and return with images that tell your story.</div>
+        <div class="exp-arrow">Discover →</div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- DIVIDER -->
+<div class="gold-divider">
+  <div class="gold-divider-line"></div>
+  <div class="gold-divider-icon">✦</div>
+  <div class="gold-divider-line"></div>
+</div>
+
 <!-- WHY US -->
 <section class="why" id="about">
-  <div class="why-grid">
-    <div class="img-wrap">
-      <img src="https://image.pollinations.ai/prompt/luxury%20safari%20tented%20camp%20interior%20night%20warm%20glowing%20lanterns%20linen%20draped%20bed%20open%20canvas%20walls%20showing%20dark%20savanna%20outside%20no%20people%20interior%20luxury%20travel%20photography%20cinematic%20warm%20tones%20no%20text%20no%20watermark?width=700&height=950&seed=505&nologo=true" alt="Luxury Camp" class="why-img"/>
-    </div>
-    <div class="why-right">
-      <div class="section-tag">Why Choose Us</div>
-      <h2 class="section-title">Safari Done <em>Differently</em></h2>
-      <p class="section-sub">We believe a safari should be transformative — not just a tick on a bucket list.</p>
-      <div class="why-items">
-        <div class="why-item">
-          <div class="why-num">01</div>
-          <div class="why-content"><h3>Fully Bespoke Itineraries</h3><p>No two safaris are the same. We design every journey around your interests, travel style, and timeline.</p></div>
+  <div class="why-visual reveal">
+    <div class="why-gold-bar"></div>
+    <img src="https://image.pollinations.ai/prompt/safari%20guide%20pointing%20binoculars%20kenya%20bush%20golden%20hour%20warm%20light%20photorealistic%20no%20text%20no%20watermark?width=700&height=900&seed=600&nologo=true" class="why-img-main" alt="Safari guide"/>
+    <img src="https://image.pollinations.ai/prompt/lioness%20close%20up%20portrait%20golden%20hour%20bokeh%20background%20kenya%20photorealistic%20wildlife%20no%20text%20no%20watermark?width=350&height=350&seed=601&nologo=true" class="why-img-inset" alt="Wildlife close-up"/>
+  </div>
+  <div>
+    <div class="reveal"><div class="section-tag">Why Choose Us</div></div>
+    <div class="reveal reveal-delay-1"><h2 class="section-title">Built on <em>Deep Roots</em><br/>in the Wild</h2></div>
+    <div class="reveal reveal-delay-2"><p class="section-sub">We don't just run safaris — we've spent fifteen years learning every waterhole, every migration pattern, every story the land has to tell.</p></div>
+    <div class="why-items reveal reveal-delay-3">
+      <div class="why-item">
+        <div class="why-num">I</div>
+        <div class="why-content">
+          <h3>Expert Local Guides</h3>
+          <p>Our guides are born and raised near the parks they walk. They read the bush the way you read a book — fluently, instinctively.</p>
         </div>
-        <div class="why-item">
-          <div class="why-num">02</div>
-          <div class="why-content"><h3>Expert Local Guides</h3><p>Our guides are born and raised in Kenya with decades of field experience. They read the bush like a book.</p></div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">II</div>
+        <div class="why-content">
+          <h3>Fully Bespoke Itineraries</h3>
+          <p>No two safaris are the same. We craft every day around your pace, your interests, and your idea of a perfect moment in the wild.</p>
         </div>
-        <div class="why-item">
-          <div class="why-num">03</div>
-          <div class="why-content"><h3>Handpicked Luxury Camps</h3><p>We partner only with camps that meet our standards — exceptional location, service, and minimal environmental impact.</p></div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">III</div>
+        <div class="why-content">
+          <h3>Small, Intimate Groups</h3>
+          <p>Maximum 6 guests per vehicle. You'll never fight for a window seat or wait for the crowd to move. This is your safari.</p>
         </div>
-        <div class="why-item">
-          <div class="why-num">04</div>
-          <div class="why-content"><h3>24/7 On-Ground Support</h3><p>From the moment you land to the moment you depart — our team is always reachable, always ready.</p></div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">IV</div>
+        <div class="why-content">
+          <h3>Conservation-Led Travel</h3>
+          <p>A percentage of every booking funds anti-poaching units and Maasai community bursaries — so your visit makes a lasting difference.</p>
         </div>
       </div>
     </div>
@@ -788,55 +1241,82 @@
 
 <!-- DESTINATIONS -->
 <section class="destinations" id="destinations">
-  <div class="section-tag">Where We Go</div>
-  <h2 class="section-title">Kenya's Finest <em>Destinations</em></h2>
-  <p class="section-sub">From the iconic Maasai Mara to the flamingo shores of Lake Nakuru — we know every corner of this extraordinary country.</p>
-  <div class="dest-grid">
-    <div class="dest-card img-wrap">
-      <img src="https://image.pollinations.ai/prompt/sweeping%20aerial%20view%20Maasai%20Mara%20landscape%20winding%20river%20green%20golden%20plains%20dramatic%20clouds%20photorealistic%20landscape%20photography%20cinematic%20no%20text%20no%20watermark?width=500&height=750&seed=601&nologo=true" alt="Maasai Mara" class="dest-img"/>
-      <div class="dest-overlay"><div class="dest-name">Maasai Mara</div><div class="dest-detail">Southwest Kenya</div></div>
+  <div class="reveal"><div class="section-tag">Where We Go</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-title light">Kenya's Most <em>Remarkable</em><br/>Wild Places</h2></div>
+  <div class="reveal reveal-delay-2"><p class="section-sub light">Twelve handpicked destinations. Each one extraordinary in a different way.</p></div>
+
+  <div class="dest-grid reveal reveal-delay-3">
+    <div class="dest-card">
+      <img src="https://image.pollinations.ai/prompt/masai%20mara%20kenya%20vast%20plains%20dramatic%20sky%20wildebeest%20golden%20hour%20aerial%20view%20photorealistic%20no%20text%20no%20watermark?width=500&height=750&seed=701&nologo=true" class="dest-img" alt="Masai Mara"/>
+      <div class="dest-overlay">
+        <div class="dest-region">Southwest Kenya</div>
+        <div class="dest-name">Masai Mara</div>
+        <div class="dest-highlight">Home of the Great Migration</div>
+      </div>
     </div>
-    <div class="dest-card img-wrap">
-      <img src="https://image.pollinations.ai/prompt/herd%20African%20elephants%20walking%20dry%20savanna%20snow%20capped%20Mount%20Kilimanjaro%20background%20golden%20hour%20light%20photorealistic%20wildlife%20photography%20no%20text%20no%20watermark?width=500&height=750&seed=602&nologo=true" alt="Amboseli" class="dest-img"/>
-      <div class="dest-overlay"><div class="dest-name">Amboseli</div><div class="dest-detail">Below Kilimanjaro</div></div>
+    <div class="dest-card">
+      <img src="https://image.pollinations.ai/prompt/amboseli%20national%20park%20elephants%20mount%20kilimanjaro%20background%20african%20savanna%20photorealistic%20no%20text%20no%20watermark?width=500&height=750&seed=702&nologo=true" class="dest-img" alt="Amboseli"/>
+      <div class="dest-overlay">
+        <div class="dest-region">Southern Kenya</div>
+        <div class="dest-name">Amboseli</div>
+        <div class="dest-highlight">Elephants & Kilimanjaro views</div>
+      </div>
     </div>
-    <div class="dest-card img-wrap">
-      <img src="https://image.pollinations.ai/prompt/thousands%20pink%20flamingos%20covering%20shallow%20African%20lake%20aerial%20view%20soft%20pastel%20tones%20photorealistic%20nature%20photography%20wide%20angle%20no%20text%20no%20watermark?width=500&height=750&seed=603&nologo=true" alt="Lake Nakuru" class="dest-img"/>
-      <div class="dest-overlay"><div class="dest-name">Lake Nakuru</div><div class="dest-detail">Rift Valley</div></div>
+    <div class="dest-card">
+      <img src="https://image.pollinations.ai/prompt/samburu%20national%20reserve%20kenya%20arid%20landscape%20gerenuk%20dry%20riverbed%20golden%20light%20photorealistic%20no%20text%20no%20watermark?width=500&height=750&seed=703&nologo=true" class="dest-img" alt="Samburu"/>
+      <div class="dest-overlay">
+        <div class="dest-region">Northern Kenya</div>
+        <div class="dest-name">Samburu</div>
+        <div class="dest-highlight">Rare species & river camps</div>
+      </div>
     </div>
-    <div class="dest-card img-wrap">
-      <img src="https://image.pollinations.ai/prompt/dramatic%20northern%20Kenya%20landscape%20dry%20riverbed%20desert%20rose%20bushes%20lone%20giraffe%20distance%20golden%20harsh%20light%20photorealistic%20cinematic%20no%20text%20no%20watermark?width=500&height=750&seed=604&nologo=true" alt="Samburu" class="dest-img"/>
-      <div class="dest-overlay"><div class="dest-name">Samburu</div><div class="dest-detail">Northern Kenya</div></div>
+    <div class="dest-card">
+      <img src="https://image.pollinations.ai/prompt/lake%20nakuru%20flamingos%20pink%20thousands%20kenya%20aerial%20view%20photorealistic%20wildlife%20no%20text%20no%20watermark?width=500&height=750&seed=704&nologo=true" class="dest-img" alt="Lake Nakuru"/>
+      <div class="dest-overlay">
+        <div class="dest-region">Rift Valley</div>
+        <div class="dest-name">Lake Nakuru</div>
+        <div class="dest-highlight">A million flamingos in bloom</div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- PULLQUOTE -->
+<div class="pullquote">
+  <div class="pullquote-bg"></div>
+  <div class="pullquote-content reveal">
+    <div class="pq-mark">"</div>
+    <p class="pq-text">Africa changes you. Not dramatically, not all at once — but quietly, in the way a river shapes a stone. You go home different, and you can never quite explain why.</p>
+    <div class="pq-attr">— A Savanna & Beyond Guest, 2024</div>
+  </div>
+</div>
+
 <!-- TESTIMONIALS -->
 <section class="testimonials">
-  <div class="section-tag">Guest Stories</div>
-  <h2 class="section-title">Words From Our <em>Guests</em></h2>
-  <p class="section-sub">From first-time safari travellers to seasoned adventurers — here is what they say.</p>
+  <div class="reveal"><div class="section-tag">Guest Stories</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-title">Told in Their <em>Own Words</em></h2></div>
+
   <div class="testi-grid">
-    <div class="testi-card">
-      <div class="testi-quote">"</div>
-      <p class="testi-text">The attention to detail was extraordinary. Our guide anticipated every wish before we even expressed it. The Mara at sunrise will stay with me forever.</p>
+    <div class="testi-card reveal reveal-delay-1">
+      <div class="testi-stars">★ ★ ★ ★ ★</div>
+      <p class="testi-text">We've done safaris on three continents, and nothing came close to this. The guide knew when and where every animal would move — it felt like magic.</p>
       <div class="testi-divider"></div>
-      <div class="testi-name">James & Sarah T.</div>
+      <div class="testi-name">James & Helen Whitmore</div>
       <div class="testi-origin">London, United Kingdom</div>
     </div>
-    <div class="testi-card">
-      <div class="testi-quote">"</div>
-      <p class="testi-text">We have done safaris across Africa but Kenya with Savanna & Beyond was in a different league entirely. The camps, the guides, the game — all flawless.</p>
+    <div class="testi-card reveal reveal-delay-2">
+      <div class="testi-stars">★ ★ ★ ★ ★</div>
+      <p class="testi-text">The private bush camp under the stars was the single most extraordinary night of my life. Absolute silence, then lions calling in the dark. Nothing prepares you for that.</p>
       <div class="testi-divider"></div>
-      <div class="testi-name">Marc D.</div>
+      <div class="testi-name">Sophie Delacroix</div>
       <div class="testi-origin">Paris, France</div>
     </div>
-    <div class="testi-card">
-      <div class="testi-quote">"</div>
-      <p class="testi-text">Our family of five had completely different expectations and somehow they delivered for every single one of us. An absolutely magical two weeks.</p>
+    <div class="testi-card reveal reveal-delay-3">
+      <div class="testi-stars">★ ★ ★ ★ ★</div>
+      <p class="testi-text">Our kids are 8 and 11. I worried they'd be bored or scared. Instead they came home asking when we can go back. That tells you everything about how thoughtful the whole experience was.</p>
       <div class="testi-divider"></div>
-      <div class="testi-name">The Anderson Family</div>
-      <div class="testi-origin">New York, USA</div>
+      <div class="testi-name">The Okonkwo Family</div>
+      <div class="testi-origin">Lagos, Nigeria</div>
     </div>
   </div>
 </section>
@@ -845,63 +1325,97 @@
 <section class="booking" id="booking">
   <div class="booking-wrap">
     <div class="booking-left">
-      <div class="section-tag">Get In Touch</div>
-      <h2>Begin Planning<br/>Your <em>Safari</em></h2>
-      <p>Tell us your dream and we will craft the perfect Kenya safari around it. No obligation — just a conversation about what's possible.</p>
-      <div class="contact-detail">
-        <div class="cd-icon">📞</div>
-        <div class="cd-text"><strong>Phone / WhatsApp</strong><span>+254 700 000 000</span></div>
+      <div class="reveal"><div class="section-tag">Plan Your Journey</div></div>
+      <div class="reveal reveal-delay-1">
+        <h2>Begin Your<br/><em>Safari Story</em></h2>
       </div>
-      <div class="contact-detail">
-        <div class="cd-icon">✉️</div>
-        <div class="cd-text"><strong>Email</strong><span>info@savannabeyond.co.ke</span></div>
+      <div class="reveal reveal-delay-2">
+        <p>Tell us your dream and we'll build the itinerary around it. We respond to every enquiry within 24 hours with a personalised proposal — no generic packages, no surprises.</p>
       </div>
-      <div class="contact-detail">
-        <div class="cd-icon">📍</div>
-        <div class="cd-text"><strong>Office</strong><span>Karen, Nairobi, Kenya</span></div>
-      </div>
-      <div class="contact-detail">
-        <div class="cd-icon">🕐</div>
-        <div class="cd-text"><strong>Office Hours</strong><span>Mon – Sat: 8AM – 6PM EAT</span></div>
+      <div class="reveal reveal-delay-3">
+        <div class="contact-item">
+          <div class="ci-icon">📍</div>
+          <div>
+            <div class="ci-label">Office</div>
+            <div class="ci-value">Nairobi, Kenya</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">📞</div>
+          <div>
+            <div class="ci-label">Call or WhatsApp</div>
+            <div class="ci-value">+254 700 000 000</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">✉️</div>
+          <div>
+            <div class="ci-label">Email</div>
+            <div class="ci-value">info@savannabeyond.co.ke</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">🕐</div>
+          <div>
+            <div class="ci-label">Response Time</div>
+            <div class="ci-value">Within 24 hours</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="booking-form">
-      <h3>Safari Enquiry</h3>
+
+    <form class="booking-form reveal reveal-delay-2" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="a98b03d6-ba66-4894-ba9f-dd426d4c0ecb"/>
+      <input type="hidden" name="redirect" value="https://savannabeyond.co.ke/thank-you"/>
+      <h3>Enquire <em>Now</em></h3>
       <div class="form-row">
-        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name"/></div>
-        <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="Your name" required/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="you@email.com" required/>
+        </div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label>Travel Dates</label><input type="text" placeholder="e.g. July 2025"/></div>
         <div class="form-group">
-          <label>Group Size</label>
-          <select>
-            <option>Select...</option>
-            <option>1 – 2 Guests</option>
-            <option>3 – 4 Guests</option>
-            <option>5 – 8 Guests</option>
-            <option>9+ Guests</option>
+          <label>WhatsApp Number</label>
+          <input type="tel" name="phone" placeholder="+254 700 000 000"/>
+        </div>
+        <div class="form-group">
+          <label>Number of Guests</label>
+          <select name="guests">
+            <option>1–2 guests</option>
+            <option>3–4 guests</option>
+            <option>5–6 guests</option>
+            <option>7+ guests</option>
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label>Preferred Destination</label>
-        <select>
-          <option>Select destination...</option>
-          <option>Maasai Mara</option>
-          <option>Amboseli</option>
-          <option>Lake Nakuru</option>
-          <option>Samburu</option>
-          <option>Multi-destination</option>
-          <option>Unsure — advise me</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Preferred Destination</label>
+          <select name="destination">
+            <option>Masai Mara</option>
+            <option>Amboseli</option>
+            <option>Samburu</option>
+            <option>Lake Nakuru</option>
+            <option>Laikipia / Ol Pejeta</option>
+            <option>Undecided — advise me</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Approx. Travel Dates</label>
+          <input type="text" name="dates" placeholder="e.g. July 2025, 10 days"/>
+        </div>
       </div>
       <div class="form-group">
         <label>Tell Us Your Dream Safari</label>
-        <textarea placeholder="What kind of experience are you looking for?"></textarea>
+        <textarea name="message" placeholder="What matters most to you? Big Five? Photography? Honeymoon? Family? We'll tailor everything around your answer..."></textarea>
       </div>
-      <button class="btn-gold" style="width:100%; padding:1rem; font-size:0.78rem; letter-spacing:0.15em;">Send Enquiry</button>
-    </div>
+      <button type="submit" class="form-submit">Send Enquiry — We'll Respond in 24hrs</button>
+    </form>
   </div>
 </section>
 
@@ -909,51 +1423,80 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="footer-brand-logo">Savanna <span>&</span> Beyond</div>
-      <p>Luxury bespoke safari experiences across Kenya. Crafted for the discerning traveller who seeks something truly extraordinary.</p>
+      <div class="footer-logo">Savanna <span class="amp">&</span> Beyond</div>
+      <p>Luxury safari experiences across Kenya's most extraordinary wild places. Bespoke itineraries. Expert guides. Memories for life.</p>
+      <div class="footer-social">
+        <a href="#" class="footer-social-link">ig</a>
+        <a href="#" class="footer-social-link">fb</a>
+        <a href="#" class="footer-social-link">tw</a>
+      </div>
     </div>
     <div class="footer-col">
       <h4>Experiences</h4>
       <ul>
-        <li><a href="#">Great Migration</a></li>
-        <li><a href="#">Big Five Quest</a></li>
-        <li><a href="#">Balloon Safari</a></li>
-        <li><a href="#">Cultural Tours</a></li>
+        <li><a href="#">The Great Migration</a></li>
+        <li><a href="#">Balloon Safaris</a></li>
+        <li><a href="#">Photography Safaris</a></li>
+        <li><a href="#">Bush Camps</a></li>
+        <li><a href="#">Maasai Encounters</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Destinations</h4>
       <ul>
-        <li><a href="#">Maasai Mara</a></li>
+        <li><a href="#">Masai Mara</a></li>
         <li><a href="#">Amboseli</a></li>
-        <li><a href="#">Lake Nakuru</a></li>
         <li><a href="#">Samburu</a></li>
+        <li><a href="#">Lake Nakuru</a></li>
+        <li><a href="#">Laikipia</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Contact</h4>
+      <h4>Company</h4>
       <ul>
-        <li><a href="#">+254 700 000 000</a></li>
-        <li><a href="#">info@savannabeyond.co.ke</a></li>
-        <li><a href="#">Karen, Nairobi</a></li>
-        <li><a href="#">Mon–Sat 8AM–6PM</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Guides</a></li>
+        <li><a href="#">Conservation</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#booking">Book a Safari</a></li>
       </ul>
     </div>
   </div>
+
   <div class="footer-bottom">
-    <p class="footer-copy">© 2026 Savanna & Beyond. Nairobi, Kenya. All rights reserved.</p>
-    <p class="footer-copy">Licensed Safari Operator · Kenya Tourism Board Registered</p>
+    <p class="footer-copy">© 2026 Savanna & Beyond. All rights reserved. Nairobi, Kenya.</p>
+    <p class="footer-credit">Website by <a href="https://isaacwebs.co.ke" target="_blank">IsaacWebs</a></p>
   </div>
 </footer>
 
-<a href="https://wa.me/254700000000" target="_blank" class="wa-float">💬</a>
+<a href="https://wa.me/254700000000?text=Hello%20Savanna%20%26%20Beyond,%20I%20would%20like%20to%20enquire%20about%20a%20safari." target="_blank" class="wa-float">💬</a>
 
 <script>
-  const navbar = document.getElementById('navbar');
+  // Nav scroll effect
+  const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   });
-</script>
 
+  // Cursor glow
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top  = e.clientY + 'px';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
